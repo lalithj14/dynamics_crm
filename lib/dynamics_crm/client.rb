@@ -96,7 +96,7 @@ module DynamicsCRM
         @signature = '<SignedInfo xmlns="http://www.w3.org/2000/09/xmldsig#"><CanonicalizationMethod Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#"></CanonicalizationMethod><SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#hmac-sha1"></SignatureMethod><Reference URI="#_0"><Transforms><Transform Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#"></Transform></Transforms><DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1"></DigestMethod><DigestValue>' + @digest_value + '</DigestValue></Reference></SignedInfo>'
         @signature_value = Base64.encode64(OpenSSL::HMAC.digest(OpenSSL::Digest.new('sha1'), Base64.decode64(@server_secret), @signature)).chomp
       else
-        cipher_values = document.get_elements("//CipherValue")
+        cipher_values = document.get_elements("//*[local-name() = 'CipherValue']")
 
         if cipher_values && cipher_values.length > 0
           @security_token0 = cipher_values[0].text
